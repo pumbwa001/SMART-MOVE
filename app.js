@@ -9,25 +9,12 @@ async function startQuiz() {
   if (!subjectNames[subject]) {
     throw new Error(`Unknown quiz subject: ${subject}`);
   }
-
-  const allowed = await window.smartMoveRequireAccess();
-  if (!allowed) return;
-
-  const session = window.smartMoveSupabase.getCachedSession();
-  let questions;
-  if (navigator.onLine) {
-    try {
-      questions = await window.smartMoveSupabase.rpc(
-        "smart_move_get_questions",
-        { p_subject: subject },
-      );
-    } catch (error) {
-      if (error.code !== "NETWORK") throw error;
-      questions = await getCachedQuestions(subject, session);
-    }
-  } else {
-    questions = await getCachedQuestions(subject, session);
+  if (!Array.isArray(window.smartMoveQuestions)) {
+    throw new Error("The built-in question bank could not be loaded.");
   }
+  let questions = subject === "mixed"
+    ? [...window.smartMoveQuestions]
+    : window.smartMoveQuestions.filter((question) => question.subject === subject);
 
   if (
     !Array.isArray(questions) ||
@@ -42,7 +29,7 @@ async function startQuiz() {
       question.answer > 3
     )
   ) {
-    throw new Error("The secured question set is missing or invalid.");
+    throw new Error(`The ${subject} question set is missing or invalid.`);
   }
 
   if (subject === "mixed") {
@@ -54,6 +41,7 @@ async function startQuiz() {
 
   let current = 0;
   let score = 0;
+  let wrongAnswers = 0;
   let answered = false;
   let answerAudioContext;
 
@@ -74,7 +62,9 @@ async function startQuiz() {
   function loadQuestion() {
     if (current >= questions.length) {
       localStorage.setItem("smartMoveScore", score);
+      localStorage.setItem("smartMoveWrong", wrongAnswers);
       localStorage.setItem("smartMoveTotal", questions.length);
+      localStorage.setItem("smartMovePlayed", current);
       localStorage.setItem("smartMoveSubject", subject);
       location.href = "results.html";
       return;
@@ -160,6 +150,7 @@ async function startQuiz() {
       score += 1;
       scoreEl.textContent = `Score: ${score}`;
     } else {
+      wrongAnswers += 1;
       buttons[selectedIndex].classList.add("wrong");
       buttons[question.answer].classList.add("correct");
       feedback.style.color = "#ff4d4d";
@@ -190,30 +181,6 @@ async function startQuiz() {
   });
 
   loadQuestion();
-}
-
-async function getCachedQuestions(subject, session) {
-  if (!session?.user?.id || !window.smartMoveOffline.hasPaidAccess(session.user.id)) {
-    throw new Error("Connect online and verify payment before playing offline.");
-  }
-
-  if (subject !== "mixed") {
-    const questions = await window.smartMoveOffline.readQuestionSet(subject);
-    if (!Array.isArray(questions) || questions.length === 0) {
-      throw new Error(`The ${subject} questions are not cached. Connect online and open Smart Move once to prepare offline play.`);
-    }
-    return questions;
-  }
-
-  const sets = await Promise.all(
-    ["biology", "chemistry", "physics"].map((item) =>
-      window.smartMoveOffline.readQuestionSet(item),
-    ),
-  );
-  if (sets.some((set) => !Array.isArray(set) || set.length === 0)) {
-    throw new Error("Questions are not cached yet. Connect online and open Smart Move once to prepare offline play.");
-  }
-  return sets.flat();
 }
 
 startQuiz().catch((error) => {

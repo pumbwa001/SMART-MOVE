@@ -9,7 +9,6 @@
 <style>
 body.quiz{background-image:url('IMG-20261025-WA2280.jpg');background-size:cover}
 body.quiz::before{content:"";position:fixed;inset:0;background:rgba(6,16,36,0.85);z-index:0}
-body.protected-page .wrap{visibility:hidden}
 .wrap{position:relative;z-index:1;max-width:480px;margin:auto;padding:20px;color:#fff}
 .qcard{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:18px;backdrop-filter:blur(10px)}
 .opt{width:100%;padding:14px;margin-top:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;text-align:left;cursor:pointer}
@@ -24,7 +23,7 @@ body.protected-page .wrap{visibility:hidden}
 [hidden]{display:none!important}
 </style>
 </head>
-<body class="quiz protected-page">
+<body class="quiz">
 <p id="access-error" class="access-error" role="alert" hidden></p>
 <div class="wrap">
 <div class="top"><span id="subject">Biology</span><span id="count">Question 1</span><span id="score">Score: 0</span></div>
@@ -40,10 +39,7 @@ body.protected-page .wrap{visibility:hidden}
 </div>
 </div>
 </div>
-<script src="supabase-config.js"></script>
-<script src="supabase-client.js"></script>
-<script src="offline-cache.js"></script>
-<script src="app-access.js"></script>
+<script src="questions.js"></script>
 <script src="app.js"></script>
 <script src="pwa.js"></script>
 </body>

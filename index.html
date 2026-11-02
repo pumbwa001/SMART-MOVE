@@ -8,19 +8,11 @@
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-.panel{width:100%;margin-top:22px;text-align:left}
-.panel h2{margin-bottom:12px}
-.form-label{display:block;margin:14px 0 6px;font-size:14px;color:#d5e5fb}
-.form-input{width:100%;min-height:48px;padding:12px 14px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:16px}
-.form-input::placeholder{color:#afc3df}
-.form-note{margin-top:8px;color:#bcd2ef;font-size:13px;line-height:1.5}
-.panel .btn{margin-top:12px;justify-content:center;text-align:center}
-.panel .btn.outline{justify-content:center}
-.panel-message{min-height:1.5em;margin-top:12px;color:#bcd2ef;font-size:14px;line-height:1.5}
-.account-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px auto 0;color:#d5e5fb;font-size:14px}
-.account-bar .btn{width:auto;min-height:42px;padding:10px 14px}
+.home-panel{width:100%;margin-top:22px;text-align:left}
+.home-panel h2{margin-bottom:12px}
+.install-panel{margin-top:20px}
 .install-button{justify-content:center}
-.install-help{min-height:1.5em;margin-top:14px;color:#bcd2ef;font-size:13px;line-height:1.5}
+.install-help{min-height:1.5em;margin-top:12px;color:#bcd2ef;font-size:13px;line-height:1.5}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -29,62 +21,22 @@
 <h1><span>Welcome to</span><span>Smart Move</span></h1>
 <p class="slogan">Play smart to become more wise</p>
 
-<section id="auth-panel" class="panel">
-<h2 id="auth-title">Sign in to Smart Move</h2>
-<form id="auth-form">
-<label class="form-label" for="email">Email address</label>
-<input class="form-input" id="email" name="email" type="email" autocomplete="email" required maxlength="254">
-<label id="password-label" class="form-label" for="password">Password</label>
-<input class="form-input" id="password" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128">
-<p id="account-password-note" class="form-note" hidden>Use a separate sign-in password. Enter your payment transaction ID once after creating the account to activate paid access.</p>
-<button id="auth-submit" class="btn play" type="submit">SIGN IN</button>
-</form>
-<button id="toggle-auth" class="btn outline" type="button">CREATE CLIENT ACCOUNT</button>
-<a class="btn outline" href="admin.html" style="margin-top:12px;justify-content:center;text-align:center">PUMBWA — ADMIN SIGN IN</a>
-<p id="auth-message" class="panel-message" role="status" aria-live="polite"></p>
-</section>
-
-<section id="payment-panel" class="panel" hidden>
-<h2>Unlock Smart Move</h2>
-<p>Pay MWK 1,000 using the administrator's official payment details. After the administrator verifies your payment, enter its transaction ID once to activate this account. Keep using your separate account password to sign in. Each ID can be used once.</p>
-<form id="payment-form">
-<label class="form-label" for="transaction-id">Mobile-money transaction ID</label>
-<input class="form-input" id="transaction-id" name="transaction-id" type="text" autocomplete="off" required minlength="4" maxlength="128">
-<button id="redeem-button" class="btn play" type="submit">VERIFY PAYMENT</button>
-</form>
-<p id="payment-message" class="panel-message" role="status" aria-live="polite"></p>
-<button id="payment-sign-out" class="btn outline" type="button">SIGN OUT</button>
-</section>
-
-<section id="app-panel" hidden>
-<p id="quiz-prompt" class="quiz-prompt">Choose a subject or try a mixed quiz</p>
+<section class="home-panel" aria-label="Choose a quiz">
+<h2>Choose a subject</h2>
 <div class="buttons">
 <button class="btn play" onclick="location.href='quiz.html?subject=mixed'">MIXED QUIZ <span>→</span></button>
 <button class="btn outline" onclick="location.href='quiz.html?subject=biology'">BIOLOGY</button>
 <button class="btn outline" onclick="location.href='quiz.html?subject=chemistry'">CHEMISTRY</button>
 <button class="btn outline" onclick="location.href='quiz.html?subject=physics'">PHYSICS</button>
 <button class="btn outline" onclick="location.href='results.html'">RESULTS</button>
-<a id="admin-link" class="btn outline" href="admin.html" hidden>ADMIN</a>
-<button class="btn outline" onclick="if(confirm('Exit?')) document.body.innerHTML='<h1 style=color:white;text-align:center;margin-top:40vh>Thanks for playing!</h1>'">EXIT</button>
 </div>
-<div class="account-bar">
-<span id="signed-in-email"></span>
-<button id="sign-out" class="btn outline" type="button">SIGN OUT</button>
-</div>
-<p id="offline-cache-status" class="install-help" role="status" aria-live="polite"></p>
 </section>
 
 <section class="install-panel" aria-label="Install Smart Move">
 <button id="install-app" class="btn outline install-button" type="button">INSTALL APP</button>
-<p id="install-help" class="install-help" role="status" aria-live="polite">Install Smart Move on this phone for quick access and offline quizzes.</p>
+<p id="install-help" class="install-help" role="status" aria-live="polite">Install Smart Move on this phone for quick access.</p>
 </section>
-
-<p id="config-message" class="panel-message" role="alert" hidden></p>
 </main>
-<script src="supabase-config.js"></script>
-<script src="supabase-client.js"></script>
-<script src="offline-cache.js"></script>
-<script src="auth.js"></script>
 <script src="pwa.js"></script>
 </body>
 </html>

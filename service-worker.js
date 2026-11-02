@@ -1,20 +1,13 @@
-const CACHE_NAME = "smart-move-v13";
+const CACHE_NAME = "smart-move-v15";
 const APP_FILES = [
   "./",
   "./index.html",
   "./quiz.html",
   "./results.html",
   "./style.css",
+  "./questions.js",
   "./app.js",
   "./pwa.js",
-  "./supabase-config.js",
-  "./supabase-client.js",
-  "./app-access.js",
-  "./offline-cache.js",
-  "./auth.js",
-  "./admin.html",
-  "./admin.js",
-  "./supabase-schema.sql",
   "./manifest.webmanifest",
   "./icon.svg",
   "./icon-192.png",
