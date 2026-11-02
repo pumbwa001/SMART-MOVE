@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1931">
+<title>Smart Move Admin</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+.admin-panel{width:100%;max-width:560px;margin-top:24px;text-align:left}
+.admin-panel h2,.admin-panel h3{margin-bottom:14px}
+.form-label{display:block;margin:14px 0 6px;font-size:14px;color:#d5e5fb}
+.form-input{width:100%;min-height:48px;padding:12px 14px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-size:16px}
+.admin-panel .btn{width:100%;margin-top:12px;justify-content:center}
+.admin-panel p{margin:12px 0;color:#bcd2ef;line-height:1.5}
+.message{min-height:1.5em;margin-top:12px;color:#bcd2ef;font-size:14px;line-height:1.5}
+.payments{display:grid;gap:8px;margin-top:16px;padding:0;list-style:none}
+.payments li{padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.06)}
+.payments-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}
+.payments-toolbar .btn{width:auto;margin:0;padding:10px 14px}
+.pending-count{margin:0!important;font-size:14px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main class="container">
+<h1><span>Smart Move</span><span>Admin</span></h1>
+<section id="admin-login" class="admin-panel">
+<h2>Administrator sign in</h2>
+<form id="admin-login-form">
+<label class="form-label" for="admin-email">Admin email</label>
+<input class="form-input" id="admin-email" type="email" autocomplete="username" value="pumbwagrant@gmail.com" readonly>
+<label class="form-label" for="admin-password">Password</label>
+<input class="form-input" id="admin-password" type="password" autocomplete="current-password" required minlength="8" maxlength="128">
+<button id="admin-login-button" class="btn play" type="submit">SIGN IN</button>
+</form>
+<p id="admin-login-message" class="message" role="status" aria-live="polite"></p>
+</section>
+
+<section id="admin-dashboard" class="admin-panel" hidden>
+<h2>Verified payment IDs</h2>
+<p>First confirm the MWK 1,000 payment in your mobile-money account. Then add its transaction ID here. Each ID can unlock one client account once.</p>
+<form id="add-payment-form">
+<label class="form-label" for="new-transaction-id">Transaction ID</label>
+<input class="form-input" id="new-transaction-id" type="text" autocomplete="off" required minlength="4" maxlength="128">
+<button id="add-payment-button" class="btn play" type="submit">ADD VERIFIED PAYMENT ID</button>
+</form>
+<p id="admin-message" class="message" role="status" aria-live="polite"></p>
+<div class="payments-toolbar">
+<h3>Payment ID status</h3>
+<button id="sync-payments" class="btn outline" type="button" disabled>SYNC PENDING</button>
+</div>
+<p id="pending-count" class="pending-count">0 IDs waiting to sync</p>
+<ul id="payment-list" class="payments"></ul>
+<button id="admin-sign-out" class="btn outline" type="button">SIGN OUT</button>
+</section>
+
+<p id="config-message" class="message" role="alert" hidden></p>
+<p><a href="index.html" style="color:#bcd2ef">Return to Smart Move</a></p>
+</main>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="admin.js"></script>
+<script src="pwa.js"></script>
+</body>
+</html>

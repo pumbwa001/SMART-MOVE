@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1931">
+<title>Smart Move Quiz</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+body.quiz{background-image:url('IMG-20261025-WA2280.jpg');background-size:cover}
+body.quiz::before{content:"";position:fixed;inset:0;background:rgba(6,16,36,0.85);z-index:0}
+body.protected-page .wrap{visibility:hidden}
+.wrap{position:relative;z-index:1;max-width:480px;margin:auto;padding:20px;color:#fff}
+.qcard{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:18px;backdrop-filter:blur(10px)}
+.opt{width:100%;padding:14px;margin-top:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;text-align:left;cursor:pointer}
+.opt.correct{background:#1ed760;color:#000} .opt.wrong{background:#ff4d4d;color:#fff}.opt:disabled{cursor:default}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 10px;color:#7aa0d0;font-size:13px;margin-bottom:14px}
+#hint{line-height:1.5}
+.quiz-actions{display:flex;gap:12px;margin-top:18px}
+.quiz-actions .btn{width:auto;flex:1;min-width:0;padding:12px 8px;font-size:clamp(11px,3vw,15px)}
+.quiz-actions .menu{justify-content:center}
+#next[hidden],#skip[hidden]{display:none}
+.access-error{position:relative;z-index:1;max-width:480px;margin:auto;padding:24px;color:#ffb4b4;line-height:1.6}
+[hidden]{display:none!important}
+</style>
+</head>
+<body class="quiz protected-page">
+<p id="access-error" class="access-error" role="alert" hidden></p>
+<div class="wrap">
+<div class="top"><span id="subject">Biology</span><span id="count">Question 1</span><span id="score">Score: 0</span></div>
+<div class="qcard">
+<h2 id="qtext">Loading...</h2>
+<p id="hint" style="color:#7aa0d0;font-size:12px;margin:8px 0 16px"></p>
+<div id="options"></div>
+<div id="feedback" role="status" aria-live="polite" style="margin-top:14px;font-size:13px;min-height:18px"></div>
+<div class="quiz-actions">
+<button id="skip" class="btn outline" type="button">SKIP QUESTION</button>
+<button id="next" class="btn play" type="button" hidden>NEXT QUESTION</button>
+<button id="menu" class="btn outline menu" type="button">MENU</button>
+</div>
+</div>
+</div>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="offline-cache.js"></script>
+<script src="app-access.js"></script>
+<script src="app.js"></script>
+<script src="pwa.js"></script>
+</body>
+</html>

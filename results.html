@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1931">
+<title>Smart Move Quiz Results</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+.results{width:100%;max-width:420px;padding:24px;text-align:center}
+.results p{margin:18px 0;color:#7aa0d0}
+.results .buttons{margin-top:30px}
+body.protected-page .results{visibility:hidden}
+.access-error{max-width:420px;padding:24px;color:#ffb4b4;line-height:1.6}
+[hidden]{display:none!important}
+</style>
+</head>
+<body class="protected-page">
+<p id="access-error" class="access-error" role="alert" hidden></p>
+<main class="results">
+<h1>Quiz Complete</h1>
+<p id="result">Loading your result...</p>
+<div class="buttons">
+<button class="btn play" onclick="location.href='quiz.html'">PLAY AGAIN <span>→</span></button>
+<button class="btn outline" onclick="location.href='index.html'">HOME</button>
+</div>
+</main>
+<script src="supabase-config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="offline-cache.js"></script>
+<script src="app-access.js"></script>
+<script>
+window.smartMoveRequireAccess().then((allowed) => {
+  if (!allowed) return;
+
+  const score = Number(localStorage.getItem("smartMoveScore"));
+  const total = Number(localStorage.getItem("smartMoveTotal"));
+  const subject = localStorage.getItem("smartMoveSubject");
+  const result = document.getElementById("result");
+  if (Number.isFinite(score) && Number.isFinite(total) && total > 0) {
+    const subjectName = {
+      biology: "Biology",
+      chemistry: "Chemistry",
+      physics: "Physics",
+      mixed: "Mixed",
+    }[subject] || "Quiz";
+    result.textContent = `${subjectName} quiz: you scored ${score} out of ${total}.`;
+  } else {
+    result.textContent = "Complete a quiz to see your result.";
+  }
+}).catch((error) => {
+  console.error("Smart Move results could not be loaded.", error);
+  const errorMessage = document.getElementById("access-error");
+  errorMessage.textContent = error.message;
+  const homeLink = document.createElement("a");
+  homeLink.href = "index.html";
+  homeLink.textContent = " Return to Smart Move.";
+  homeLink.style.color = "#bcd2ef";
+  errorMessage.appendChild(homeLink);
+  errorMessage.hidden = false;
+});
+</script>
+<script src="pwa.js"></script>
+</body>
+</html>
